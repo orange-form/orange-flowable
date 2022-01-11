@@ -402,7 +402,7 @@ public abstract class BaseService<M, K extends Serializable> extends ServiceImpl
         for (int i = 0; i < orderByProperties.length; i++) {
             columns[i] = this.safeMapToColumnName(orderByProperties[i]);
         }
-        return mapper().selectList(new QueryWrapper<M>().orderByAsc(columns));
+        return mapper().selectList(new QueryWrapper<M>().orderByAsc(Arrays.asList(columns)));
     }
 
     /**
@@ -533,7 +533,7 @@ public abstract class BaseService<M, K extends Serializable> extends ServiceImpl
      */
     @Override
     public int getCountByFilter(M filter) {
-        return mapper().selectCount(new QueryWrapper<>(filter));
+        return Math.toIntExact(mapper().selectCount(new QueryWrapper<>(filter)));
     }
 
     /**
